@@ -27,7 +27,7 @@ function useChart() {
 
 export const ChartContainer = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> & { config: ChartConfig; children?: React.ReactNode }
+  React.ComponentProps<"div"> & { config: ChartConfig; children?: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"] }
 >(({ className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
   const id = `chart-${uniqueId.replace(/:/g, "")}`
@@ -36,7 +36,9 @@ export const ChartContainer = React.forwardRef<
     <ChartContext.Provider value={{ config }}>
       <div ref={ref} data-chart={id} className={cn("w-full h-[360px]", className)} {...props}>
         <ChartStyle id={id} config={config} />
-        {children}
+        <RechartsPrimitive.ResponsiveContainer width="100%" height="100%">
+          {React.isValidElement(children as React.ReactElement) ? (children as React.ReactElement) : <></>}
+        </RechartsPrimitive.ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
