@@ -23,11 +23,22 @@ const OutstandingCashPage = () => {
   const [projectNames, setProjectNames] = useState<Record<string, string>>({});
   const [chartType, setChartType] = useState<'comparison' | 'stacked'>('comparison');
 
+  // Smart currency formatting function
+  const formatCurrency = (amount: number): string => {
+    if (amount >= 10000000) { // 1 crore or more
+      return `₹${(amount / 10000000).toFixed(1)}Cr`;
+    } else if (amount >= 100000) { // 1 lakh or more
+      return `₹${(amount / 100000).toFixed(1)}L`;
+    } else {
+      return `₹${amount.toLocaleString()}`;
+    }
+  };
+
   const fetchOutstandingCash = async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`https://sitenote-analytics.vercel.app/api/payment/outstanding-cash/${teamId}`);
+      const res = await fetch(`http://localhost:5555/api/payment/outstanding-cash/${teamId}`);
       const data = await res.json();
       setTotalOutstandingCash(data.totalOutstandingCash);
     } catch {
@@ -40,7 +51,7 @@ const OutstandingCashPage = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`https://sitenote-analytics.vercel.app/api/payment/outstanding-cash-project/${teamId}`);
+      const res = await fetch(`http://localhost:5555/api/payment/outstanding-cash-project/${teamId}`);
       const data = await res.json();
       setProjectWiseOutstandingCash(data.projectWiseOutstandingCash);
       setProjectWiseReceivedCash(data.projectWiseReceivedCash);
@@ -57,7 +68,7 @@ const OutstandingCashPage = () => {
   useEffect(() => {
     const fetchProjectNames = async () => {
       try {
-        const res = await fetch(`https://sitenote-analytics.vercel.app/api/project/getProjectsByTeamId/${teamId}`);
+        const res = await fetch(`http://localhost:5555/api/project/getProjectsByTeamId/${teamId}`);
         const projects = await res.json();
         const mapping: Record<string, string> = {};
         projects.forEach((project: { projectId?: string; _id: string; projectName: string }) => {
