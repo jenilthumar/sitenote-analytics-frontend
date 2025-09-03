@@ -23,6 +23,17 @@ const OutstandingCashPage = () => {
   const [projectNames, setProjectNames] = useState<Record<string, string>>({});
   const [chartType, setChartType] = useState<'comparison' | 'stacked'>('comparison');
 
+  // Responsive helper for chart layout on small screens
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const onResize = () => {
+      if (typeof window !== 'undefined') setIsMobile(window.innerWidth < 768);
+    };
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   // ...existing code (formatting provided inline where needed)
 
   const fetchOutstandingCash = async () => {
@@ -303,12 +314,12 @@ const OutstandingCashPage = () => {
                       color: "hsl(var(--chart-2))",
                     },
                   }}
-                  className="h-[600px] w-full"
+                  className="h-[420px] md:h-[600px] w-full"
                 >
                   {chartType === 'comparison' ? (
                     <BarChart 
                       data={tableData} 
-                      margin={{ top: 40, right: 40, left: 80, bottom: 120 }}
+                      margin={isMobile ? { top: 20, right: 20, left: 40, bottom: 80 } : { top: 40, right: 40, left: 80, bottom: 120 }}
                       accessibilityLayer
                     >
                       <defs>
@@ -330,12 +341,12 @@ const OutstandingCashPage = () => {
                       />
                       <XAxis 
                         dataKey="name" 
-                        interval={0} 
-                        angle={-45} 
+                        interval={isMobile ? 1 : 0} 
+                        angle={isMobile ? -30 : -45} 
                         textAnchor="end" 
-                        height={120}
+                        height={isMobile ? 80 : 120}
                         tick={{ 
-                          fontSize: 11, 
+                          fontSize: isMobile ? 10 : 11, 
                           fill: '#ffffff',
                           fontWeight: 500
                         }}
@@ -370,7 +381,7 @@ const OutstandingCashPage = () => {
                           stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
-                        width={70}
+                        width={isMobile ? 55 : 70}
                       />
                       <ChartTooltip 
                         content={({ active, payload, label }) => {
@@ -459,7 +470,7 @@ const OutstandingCashPage = () => {
                   ) : (
                     <BarChart 
                       data={stackedData} 
-                      margin={{ top: 40, right: 40, left: 80, bottom: 120 }}
+                      margin={isMobile ? { top: 20, right: 20, left: 40, bottom: 80 } : { top: 40, right: 40, left: 80, bottom: 120 }}
                       barGap={8}
                       barCategoryGap={20}
                     >
@@ -482,28 +493,28 @@ const OutstandingCashPage = () => {
                       />
                       <XAxis 
                         dataKey="name" 
-                        interval={0} 
-                        angle={-45} 
+                        interval={isMobile ? 1 : 0} 
+                        angle={isMobile ? -30 : -45} 
                         textAnchor="end" 
-                        height={120}
+                        height={isMobile ? 80 : 120}
                         tick={{ 
-                          fontSize: 11, 
-                          fill: 'hsl(var(--foreground))',
+                          fontSize: isMobile ? 10 : 11, 
+                          fill: '#ffffff',
                           fontWeight: 500
                         }}
                         axisLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                         tickLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                       />
                       <YAxis 
                         tick={{ 
-                          fontSize: 11, 
-                          fill: 'hsl(var(--foreground))',
+                          fontSize: isMobile ? 10 : 11, 
+                          fill: '#ffffff',
                           fontWeight: 500
                         }}
                         tickFormatter={(value) => {
@@ -515,14 +526,14 @@ const OutstandingCashPage = () => {
                           return `₹${(value / 1000).toFixed(0)}K`;
                         }}
                         axisLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                         tickLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
-                        width={70}
+                        width={isMobile ? 55 : 70}
                       />
                       <ChartTooltip 
                         content={({ active, payload, label }) => {
