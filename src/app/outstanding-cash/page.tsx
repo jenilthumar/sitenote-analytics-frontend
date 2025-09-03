@@ -38,7 +38,7 @@ const OutstandingCashPage = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5555/api/payment/outstanding-cash/${teamId}`);
+      const res = await fetch(`https://sitenote-analytics.vercel.app/api/payment/outstanding-cash/${teamId}`);
       const data = await res.json();
       setTotalOutstandingCash(data.totalOutstandingCash);
     } catch {
@@ -51,7 +51,7 @@ const OutstandingCashPage = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5555/api/payment/outstanding-cash-project/${teamId}`);
+      const res = await fetch(`https://sitenote-analytics.vercel.app/api/payment/outstanding-cash-project/${teamId}`);
       const data = await res.json();
       setProjectWiseOutstandingCash(data.projectWiseOutstandingCash);
       setProjectWiseReceivedCash(data.projectWiseReceivedCash);
@@ -68,7 +68,7 @@ const OutstandingCashPage = () => {
   useEffect(() => {
     const fetchProjectNames = async () => {
       try {
-        const res = await fetch(`http://localhost:5555/api/project/getProjectsByTeamId/${teamId}`);
+        const res = await fetch(`https://sitenote-analytics.vercel.app/api/project/getProjectsByTeamId/${teamId}`);
         const projects = await res.json();
         const mapping: Record<string, string> = {};
         projects.forEach((project: { projectId?: string; _id: string; projectName: string }) => {
