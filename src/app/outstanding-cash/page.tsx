@@ -336,22 +336,22 @@ const OutstandingCashPage = () => {
                         height={120}
                         tick={{ 
                           fontSize: 11, 
-                          fill: 'hsl(var(--foreground))',
+                          fill: '#ffffff',
                           fontWeight: 500
                         }}
                         axisLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                         tickLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                       />
                       <YAxis 
                         tick={{ 
                           fontSize: 11, 
-                          fill: 'hsl(var(--foreground))',
+                          fill: '#ffffff',
                           fontWeight: 500
                         }}
                         tickFormatter={(value) => {
@@ -363,11 +363,11 @@ const OutstandingCashPage = () => {
                           return `₹${(value / 1000).toFixed(0)}K`;
                         }}
                         axisLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                         tickLine={{
-                          stroke: 'hsl(var(--border))',
+                          stroke: 'rgba(255,255,255,0.12)',
                           strokeWidth: 1
                         }}
                         width={70}
