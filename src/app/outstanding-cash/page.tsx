@@ -303,6 +303,38 @@ const OutstandingCashPage = () => {
                 </div>
               </CardHeader>
               <CardContent>
+                {isMobile ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Charts are best viewed on desktop</CardTitle>
+                      <CardDescription>Showing a compact summary for mobile users below.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {tableData.slice(0, 12).map((row) => {
+                          const pct = row.outstanding > 0 ? Math.min(100, (row.received / row.outstanding) * 100) : 0;
+                          return (
+                            <div key={row.projectId} className="flex items-center justify-between gap-4">
+                              <div className="min-w-0">
+                                <div className="text-sm font-medium truncate">{row.name}</div>
+                                <div className="text-xs text-muted-foreground">Outstanding: ₹{Number(row.outstanding).toLocaleString()} • Received: ₹{Number(row.received).toLocaleString()}</div>
+                              </div>
+                              <div className="w-28">
+                                <div className="h-2 w-full rounded bg-border/40">
+                                  <div className="h-2 rounded bg-green-500" style={{ width: `${pct}%` }} />
+                                </div>
+                                <div className="text-xs text-right mt-1">{pct.toFixed(0)}%</div>
+                              </div>
+                            </div>
+                          )
+                        })}
+                        {tableData.length > 12 && (
+                          <div className="text-sm text-muted-foreground">Showing first 12 projects. Use desktop for full charts.</div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
                 <ChartContainer 
                   config={{
                     outstanding: {
@@ -628,6 +660,7 @@ const OutstandingCashPage = () => {
                     </BarChart>
                   )}
                 </ChartContainer>
+                )}
               </CardContent>
             </Card>
           </div>
