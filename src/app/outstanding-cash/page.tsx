@@ -23,17 +23,6 @@ const OutstandingCashPage = () => {
   const [projectNames, setProjectNames] = useState<Record<string, string>>({});
   const [chartType, setChartType] = useState<'comparison' | 'stacked'>('comparison');
 
-  // Smart currency formatting function
-  const formatCurrency = (amount: number): string => {
-    if (amount >= 10000000) { // 1 crore or more
-      return `₹${(amount / 10000000).toFixed(1)}Cr`;
-    } else if (amount >= 100000) { // 1 lakh or more
-      return `₹${(amount / 100000).toFixed(1)}L`;
-    } else {
-      return `₹${amount.toLocaleString()}`;
-    }
-  };
-
   const fetchOutstandingCash = async () => {
     setLoading(true);
     setError('');

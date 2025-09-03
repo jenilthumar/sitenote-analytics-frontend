@@ -45,7 +45,6 @@ const ChartTooltipContent = React.forwardRef<
       hideIndicator?: boolean
       indicator?: "line" | "dot" | "dashed"
       nameKey?: string
-      labelKey?: string
     }
 >(
   (
@@ -60,8 +59,7 @@ const ChartTooltipContent = React.forwardRef<
       labelFormatter,
       labelClassName,
       formatter,
-      nameKey,
-      labelKey,
+      // nameKey,
     },
     ref
   ) => {
@@ -75,7 +73,7 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       return label
-    }, [label, labelFormatter, payload, hideLabel, labelKey])
+    }, [label, labelFormatter, payload, hideLabel])
 
     if (!active || !payload?.length) {
       return null
@@ -176,11 +174,9 @@ const ChartLegendContent = React.forwardRef<
         )}
       >
         {payload.map((item) => {
-          const key = `${nameKey || item.value || item.dataKey || "value"}`
-
           return (
             <div
-              key={item.value}
+              key={nameKey || item.value || item.dataKey || "value"}
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}

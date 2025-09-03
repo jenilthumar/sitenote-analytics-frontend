@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Building, DollarSign, TrendingUp, Users, RefreshCw, BarChart3 } from 'lucide-react';
 
 // Data interfaces
@@ -404,8 +404,6 @@ export default function FlatsAnalyticsPage() {
   useEffect(() => {
     fetchFlatsData();
   }, [fetchFlatsData]);
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
   const pieData = [
     { name: 'Sold', value: flatsData.soldFlats, color: '#22c55e' },
